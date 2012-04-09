@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * Implements hook_schema().
+ */
+function twig_schema() {
+  $schema['twig_template'] = array(
+    'description' => t('Each row specifies a Twig template.'),
+    'export' => array(
+      'key' => 'name',
+      'identifier' => 'template',
+      'default hook' => 'default_twig_template',
+      'api' => array(
+        'owner' => 'twig',
+        'api' => 'default_twig_templates',
+        'minimum_version' => 1,
+        'current_version' => 1,
+      ),
+    ),
+    'fields' => array(
+      'name' => array(
+        'type' => 'varchar',
+        'length' => '255',
+        'not null' => TRUE,
+        'description' => 'Unique machine name for this template.',
+      ),
+      'template' => array(
+        'type' => 'text',
+        'size' => 'big',
+        'not null' => TRUE,
+        'description' => 'Text of the template.',
+      ),
+    ),
+    'primary key' => array('name'),
+  );
+  return $schema;
+}

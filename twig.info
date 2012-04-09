@@ -1,0 +1,5 @@
+name = "Twig"
+description = "Provides functionality related to the Twig template engine."
+core = 7.x
+dependencies[] = ctools
+dependencies[] = libraries
