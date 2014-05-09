@@ -1,5 +1,23 @@
 <?php
 
+module_load_include('inc', 'twig', 'twig.field');
+
+/**
+ * Implements hook_menu().
+ */
+function twig_menu() {
+  return array(
+    'admin/structure/twig/enable-field' => array(
+      'title' => t('Enable Twig'),
+      'page callback' => '_twig_enable_field',
+      'page arguments' => array(4, 5),
+      'access arguments' => array('administer site configuration'),
+      'file' => 'twig.admin.inc',
+      'type' => MENU_CALLBACK,
+    ),
+  );
+}
+
 /**
  * Implements hook_ctools_plugin_directory().
  */
@@ -38,4 +56,17 @@ function twig_filter_twig_process($text, $filter, $format, $langcode, $cache, $c
   $loader = new Twig_Loader_Array($templates);
   $twig = new Twig_Environment($loader, array());
   return $twig->render('_filter_text');
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function twig_form_field_ui_field_overview_form_alter(&$form, &$form_state) {
+  if ($form['fields']['twig_template']['#row_type'] == 'extra_field') {
+    $form['fields']['twig_template']['edit'] = array(
+      '#type' => 'link',
+      '#title' => t('enable'),
+      '#href' => 'admin/structure/twig/enable-field/' . $form['#entity_type'] . '/' . $form['#bundle'],
+    );
+  }
 }
