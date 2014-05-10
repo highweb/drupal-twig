@@ -15,6 +15,9 @@ function _twig_enable_field($entity_type, $bundle) {
       'field_name' => 'twig_template',
       'cardinality' => 1,
       'type' => 'list_text',
+      'settings' => array(
+        'allowed_values_function' => '_twig_template_field_allowed_values',
+      ),
     );
     field_create_field($field);
   }
@@ -28,7 +31,7 @@ function _twig_enable_field($entity_type, $bundle) {
       'widget' => array(
         'module' => 'options',
         'type' => 'options_select',
-        'weight' => 0.5,
+        'weight' => 0,
       ),
       'display' => array(
         'default' => array(
