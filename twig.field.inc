@@ -28,8 +28,7 @@ function twig_field_extra_fields() {
  * Callback: returns allowed values for the Twig template field.
  */
 function _twig_template_field_allowed_values() {
-  module_load_include('inc', 'ctools', 'includes/export');
-  $templates = ctools_export_crud_load_all('twig_template');
+  $templates = _twig_get_db_templates();
   $keys = array_keys($templates);
   sort($keys);
   return array_combine($keys, $keys);

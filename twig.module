@@ -2,6 +2,7 @@
 
 module_load_include('inc', 'twig', 'twig.field');
 module_load_include('inc', 'twig', 'twig.filter');
+module_load_include('inc', 'twig', 'twig.utils');
 
 /**
  * Implements hook_menu().
@@ -38,5 +39,21 @@ function twig_form_field_ui_field_overview_form_alter(&$form, &$form_state) {
       '#title' => t('enable'),
       '#href' => 'admin/structure/twig/enable-field/' . $form['#entity_type'] . '/' . $form['#bundle'],
     );
+  }
+}
+
+/**
+ * Processes variables for node.tpl.php.
+ */
+function twig_process_node(&$vars) {
+  if ($vars['view_mode'] == 'full') {
+    $wrapper = entity_metadata_wrapper('node', $vars['node']);
+    if (isset($wrapper->twig_template) && $template = $wrapper->twig_template->value()) {
+      $context = _twig_extract_entity_fields($vars['content']);
+      $vars['content'] = array(
+        '#markup' => _twig_render($template, $context),
+      );
+      $vars['page'] = TRUE;
+    }
   }
 }
