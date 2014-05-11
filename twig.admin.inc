@@ -31,7 +31,7 @@ function _twig_enable_field($entity_type, $bundle) {
       'widget' => array(
         'module' => 'options',
         'type' => 'options_select',
-        'weight' => 0,
+        'weight' => -10,
       ),
       'display' => array(
         'default' => array(

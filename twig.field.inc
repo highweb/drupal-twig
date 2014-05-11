@@ -16,7 +16,7 @@ function twig_field_extra_fields() {
       if (!field_info_instance($entity_type, 'twig_template', $bundle)) {
         $info[$entity_type][$bundle]['form']['twig_template'] = array(
           'label' => t('Template'),
-          'weight' => 0,
+          'weight' => -10,
         );
       }
     }
